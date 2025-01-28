@@ -1,0 +1,26 @@
+[
+    {
+        "Author": "AndreB",
+        "Name": "Plugin Name",
+        "Punchline": "Punchlin",
+        "Description": "Description",
+        "Tags": [
+            "tag1",
+	        "tag2"
+        ],
+        "InternalName": "PluginName",
+        "AssemblyVersion": "0.0.0.1",
+        "TestingAssemblyVersion": "0.0.0.1",
+        "RepoUrl": "https://github.com/Ryan-RH/PluginTemplate",
+        "ApplicableVersion": "any",
+        "DalamudApiLevel": 11,
+        "TestingDalamudApiLevel": 11,
+        "IsHide": "False",
+        "IsTestingExclusive": "False",
+        "DownloadCount": 1,
+        "DownloadLinkInstall": "releaseurl/latest.zip",
+        "DownloadLinkUpdate": "releaseurl/latest.zip",
+        "DownloadLinkTesting": "releaseurl/latest.zip",
+        "IconUrl": ""
+    }
+]

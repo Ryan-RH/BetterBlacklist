@@ -2,7 +2,7 @@ using Dalamud.Interface.Utility;
 using ECommons.SimpleGui;
 using System.Collections.Generic;
 
-namespace PluginName.UI;
+namespace BetterBlacklist.UI;
 
 public unsafe class MainWindow : ConfigWindow
 {

@@ -3,9 +3,9 @@
   <Import Project="Dalamud.Plugin.Bootstrap.targets" />
 
   <PropertyGroup>
-    <Version>0.0.0.1</Version>
-    <Description>Mount Guide</Description>
-    <PackageProjectUrl>https://github.com/Ryan-RH/PluginTemplate</PackageProjectUrl>
+    <Version>0.0.1.0</Version>
+    <Description>Better Blacklist</Description>
+    <PackageProjectUrl>https://github.com/Ryan-RH/BetterBlacklist</PackageProjectUrl>
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
   </PropertyGroup>

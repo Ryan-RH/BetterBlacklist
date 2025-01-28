@@ -3,10 +3,10 @@ using ECommons.Configuration;
 using ECommons.EzIpcManager;
 using ECommons.SimpleGui;
 using ECommons.Singletons;
-using PluginName.Services;
-using PluginName.UI;
+using BetterBlacklist.Services;
+using BetterBlacklist.UI;
 
-namespace PluginName;
+namespace BetterBlacklist;
 
 public unsafe class PluginName : IDalamudPlugin
 {
@@ -25,7 +25,7 @@ public unsafe class PluginName : IDalamudPlugin
         EzConfigGui.Init(new MainWindow());
 
         // Command + IPC
-        EzCmd.Add("/pn", OnChatCommand, "Toggles plugin interface");;
+        EzCmd.Add("/bb;", OnChatCommand, "Toggles plugin interface");;
         SingletonServiceManager.Initialize(typeof(ServiceManager));
     }
 

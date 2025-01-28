@@ -1,17 +1,17 @@
 [
     {
         "Author": "AndreB",
-        "Name": "Plugin Name",
+        "Name": "Better Blacklist",
         "Punchline": "Punchlin",
         "Description": "Description",
         "Tags": [
             "tag1",
-	        "tag2"
+	    "tag2"
         ],
-        "InternalName": "PluginName",
-        "AssemblyVersion": "0.0.0.1",
-        "TestingAssemblyVersion": "0.0.0.1",
-        "RepoUrl": "https://github.com/Ryan-RH/PluginTemplate",
+        "InternalName": "BetterBlacklist",
+        "AssemblyVersion": "0.0.1.0",
+        "TestingAssemblyVersion": "0.0.1.0",
+        "RepoUrl": "https://github.com/Ryan-RH/BetterBlacklist",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 11,
         "TestingDalamudApiLevel": 11,

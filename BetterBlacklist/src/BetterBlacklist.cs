@@ -5,6 +5,7 @@ using ECommons.SimpleGui;
 using ECommons.Singletons;
 using BetterBlacklist.Services;
 using BetterBlacklist.UI;
+using FFXIVClientStructs.FFXIV.Client.Game;
 
 namespace BetterBlacklist;
 
@@ -25,12 +26,16 @@ public unsafe class PluginName : IDalamudPlugin
         EzConfigGui.Init(new MainWindow());
 
         // Command + IPC
-        EzCmd.Add("/bb;", OnChatCommand, "Toggles plugin interface");;
+        EzCmd.Add("/bbl", OnChatCommand, "Toggles plugin interface");;
         SingletonServiceManager.Initialize(typeof(ServiceManager));
+        Database.Init();
+
+        Svc.Framework.Update += FWM.FrameworkManager.Framework_Update;
     }
 
     public void Dispose()
     {
+        Svc.Framework.Update -= FWM.FrameworkManager.Framework_Update;
         ECommonsMain.Dispose();
         P = null;
     }

@@ -14,3 +14,4 @@ global using ECommons.DalamudServices;
 global using ECommons.Logging;
 global using ECommons;
 global using static ECommons.GenericHelpers;
+global using static BetterBlacklist.BetterBlacklist;

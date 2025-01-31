@@ -8,6 +8,12 @@
         "resolved": "11.0.0",
         "contentHash": "bjT7XUlhIJSmsE/O76b7weUX+evvGQctbQB8aKXt94o+oPWxHpCepxAGMs7Thow3AzCyqWs7cOpp9/2wcgRRQA=="
       },
+      "HtmlAgilityPack": {
+        "type": "Direct",
+        "requested": "[1.11.72, )",
+        "resolved": "1.11.72",
+        "contentHash": "RNLgXxTFdIGFI+o5l8c2aJ2L5StIRn9Uv8HKR76p7QP4ZUL26wzpWUCWh08xWUdkL2kocl+Xhv6VUu0rA1npVg=="
+      },
       "NetStone": {
         "type": "Direct",
         "requested": "[1.3.1, )",
@@ -40,11 +46,6 @@
           "System.Configuration.ConfigurationManager": "4.7.0",
           "System.Data.SqlClient": "4.8.1"
         }
-      },
-      "HtmlAgilityPack": {
-        "type": "Transitive",
-        "resolved": "1.11.46",
-        "contentHash": "dLMn4EVfJBHWmWK4Uh0XGD76FPLHI0qr2Tm0s1m/xmgiHb1JUb9zB8AzO8HtrkBBlMN6JfCUBYddhqC0hZNR+g=="
       },
       "Karashiiro.HtmlAgilityPack.CssSelectors.NetCoreFork": {
         "type": "Transitive",

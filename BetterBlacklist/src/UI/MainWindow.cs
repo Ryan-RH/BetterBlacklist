@@ -6,26 +6,26 @@ using System.Collections.Generic;
 
 namespace BetterBlacklist.UI;
 
-public unsafe class MainWindow : ConfigWindow
+public unsafe class MainWindow : Window, IDisposable
 {
-    private static bool PartyView = true;
+    public static bool PartyView = true;
+    private BetterBlacklist Plugin;
 
-
-    public MainWindow() : base()
+    public MainWindow(BetterBlacklist plugin) : base("BetterBlacklist##mainWin")
     {
-        //Size = new(430, 350);
         Size = new(600, 350);
-        Flags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.MenuBar;
+        Flags = ImGuiWindowFlags.NoResize | ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking;
+        Plugin = plugin;
     }
+
+
+    public void Dispose() { }
+
 
     public override void Draw()
     {
         MenuBar.Draw();
-        /*
-        ImGuiEx.EzTabBar("##tabbar",
-            ("Players", Players.Draw, null, true),
-            ("Customise", Customise.Draw, null, true)
-        );*/
+
         if (PartyView)
             Players.PartyDraw();
     }

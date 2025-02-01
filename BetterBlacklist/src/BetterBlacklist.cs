@@ -19,6 +19,7 @@ public class BetterBlacklist : IDalamudPlugin
     public readonly WindowSystem WindowSystem = new("BetterBlacklist");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
+    //test
 
     public BetterBlacklist(IDalamudPluginInterface pi)
     {

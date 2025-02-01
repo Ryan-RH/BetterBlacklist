@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace BetterBlacklist.UI;
 
-internal unsafe static class MenuBar
+public static class HistoryList
 {
     public static void Draw()
     {
 
     }
+
 }

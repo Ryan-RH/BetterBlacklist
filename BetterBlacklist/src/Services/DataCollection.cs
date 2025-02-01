@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BetterBlacklist.UI;
+namespace BetterBlacklist.Services;
 
-internal unsafe static class MenuBar
+public class DataCollection
 {
-    public static void Draw()
+    public static void Update(object framework)
     {
 
+
+
     }
+
+
 }

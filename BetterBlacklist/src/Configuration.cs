@@ -1,9 +1,14 @@
-using ECommons.ChatMethods;
-using ECommons.Configuration;
+using Dalamud.Configuration;
 
 namespace BetterBlacklist;
 
-public class Configuration : IEzConfig
+[Serializable]
+public class Configuration : IPluginConfiguration
 {
-    public bool Debug = false;
+    public int Version { get; set; } = 0;
+
+    public void Save()
+    {
+        Svc.PluginInterface.SavePluginConfig(this);
+    }
 }

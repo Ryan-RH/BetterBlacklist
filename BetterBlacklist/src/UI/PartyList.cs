@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BetterBlacklist.UI;
 
-internal unsafe static class MenuBar
+public static class PartyList
 {
     public static void Draw()
     {

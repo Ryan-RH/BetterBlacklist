@@ -4,6 +4,7 @@ using FFXIVClientStructs.FFXIV.Client.Game;
 using Dalamud.Interface.Windowing;
 using Dalamud.Game.Command;
 using BetterBlacklist.Services;
+using System.Net;
 
 namespace BetterBlacklist;
 
@@ -20,6 +21,7 @@ public class BetterBlacklist : IDalamudPlugin
     public BetterBlacklist(IDalamudPluginInterface pi)
     {
         P = this;
+        Svc.Init(pi);
 
         Configuration = Svc.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
         ConfigWindow = new ConfigWindow(this);
@@ -37,15 +39,14 @@ public class BetterBlacklist : IDalamudPlugin
 
         Database.Init();
 
-        Svc.Framework.Update += DataCollection.Update;
+        Svc.Framework.Update += Database.Update;
 
-        //Task.Run(() => { Network.NetStoneFind.Start(); });
-
+        Task.Run(() => { Tomestone.Start(); });
     }
 
     public void Dispose()
     {
-        Svc.Framework.Update -= DataCollection.Update;
+        Svc.Framework.Update -= Database.Update;
 
         WindowSystem.RemoveAllWindows();
 
@@ -63,8 +64,6 @@ public class BetterBlacklist : IDalamudPlugin
         arguments = arguments.Trim();
 
         if (arguments == string.Empty)
-        {
             ToggleMainUI();
-        }
     }
 }

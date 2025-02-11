@@ -2,15 +2,16 @@
     {
         "Author": "AndreB",
         "Name": "Better Blacklist",
-        "Punchline": "Punchlin",
-        "Description": "Description",
+        "Punchline": "Take control of your progression",
+        "Description": "Allows the user to see party prog points, previous duties and to save players within duties.",
         "Tags": [
-            "tag1",
-	    "tag2"
+            "Blacklist",
+	        "Tomestone",
+            "Prog"
         ],
         "InternalName": "BetterBlacklist",
-        "AssemblyVersion": "0.0.1.0",
-        "TestingAssemblyVersion": "0.0.1.0",
+        "AssemblyVersion": "0.2.0.0",
+        "TestingAssemblyVersion": "0.2.0.0",
         "RepoUrl": "https://github.com/Ryan-RH/BetterBlacklist",
         "ApplicableVersion": "any",
         "DalamudApiLevel": 11,

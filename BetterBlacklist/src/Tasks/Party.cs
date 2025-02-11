@@ -11,7 +11,22 @@ public static class Party
 {
     public static async Task Refresh()
     {
-        Game.Party party = Game.Party.Collect();
+        PartyList.party = await FetchPartyState(Game.Party.Collect());
+        await Tomestone.FetchPartyProg();
+        MenuBar.Refreshing = false;
+    }
+
+    public static async Task DWAddPlayers()
+    {
+        foreach (var player in Collection.currentDuty.Players)
+        {
+            await Modify.Rating(player);
+        }
+        Collection.currentDuty.Clear();
+    }
+
+    public static async Task<Game.Party> FetchPartyState(Game.Party party)
+    {
         for (int i = 0; i < party.Size; i++)
         {
             var member = party.Members[i];
@@ -28,18 +43,6 @@ public static class Party
                 }
             }
         }
-        PartyList.party = party;
-        await Tomestone.FetchPartyProg();
-        MenuBar.Refreshing = false;
+        return party;
     }
-
-    public static async Task DWAddPlayers()
-    {
-        foreach (var player in Collection.currentDuty.Players)
-        {
-            await Modify.Rating(player);
-        }
-        Collection.currentDuty.Clear();
-    }
-
 }

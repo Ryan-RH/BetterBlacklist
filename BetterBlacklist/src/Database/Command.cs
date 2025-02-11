@@ -56,14 +56,6 @@ public static class Command
         });
     }
 
-    public static async Task FindPartyState()
-    {
-        var tasks = new List<Task<Player?>>();
-        
-        var playerStates = await Task.WhenAll(tasks);
-
-    }
-
     public static async Task FindDutyState(int index)
     {
         var dutyContent = UI.HistoryList.DutyHistory[index];

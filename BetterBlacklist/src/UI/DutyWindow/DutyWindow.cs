@@ -43,7 +43,7 @@ public class DutyWindow : Window, IDisposable
         if (Collection.currentDuty.Name != null && Collection.currentDuty.UnixTimestamp != 0 && localPlayer != null)
         {
             var timeDifference = (Collection.timeOfExit - DateTimeOffset.FromUnixTimeSeconds(Collection.currentDuty.UnixTimestamp).DateTime);
-            ImGui.Text($"\tDuty: {Collection.currentDuty.Name}");
+            ImGui.Text($"\tDuty:\n\t {Collection.currentDuty.Name}");
             ImGui.Text($"\tDuration: {(int)timeDifference.TotalMinutes} minutes");
             ImGui.Dummy(new Vector2(0, 5));
 

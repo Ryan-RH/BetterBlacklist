@@ -17,7 +17,7 @@ public class Duty
     public void Clear()
     {
         Name = null;
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < Players.Length; i++)
         {
             Players[i] = new Game.Player();
         }

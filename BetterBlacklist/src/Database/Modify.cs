@@ -1,4 +1,5 @@
 using BetterBlacklist.Game;
+using BetterBlacklist.UI;
 using Lumina.Excel.Sheets;
 using Newtonsoft.Json;
 using System;
@@ -61,6 +62,7 @@ public static class Modify
             command.Parameters.AddWithValue("@Players", playersJson);
             await command.ExecuteNonQueryAsync();
         }
+        HistoryList.Update();
     }
 
     public static async Task Rating(Game.Player player)

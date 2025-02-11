@@ -29,11 +29,7 @@ public static class Collection
 
                 currentDuty.Name = content.Name.ExtractText();
                 currentDuty.UnixTimestamp = (uint)DateTimeOffset.Now.ToUnixTimeSeconds();
-                currentDuty.Players = Party.Collect().Members.ToArray();
-                foreach (var player in currentDuty.Players)
-                {
-                    player.State = State.Familiar;
-                }
+                FindParty();
                 InfoCollected = true;
             }
         }
@@ -44,9 +40,36 @@ public static class Collection
                 InfoCollected = false;
                 timeOfExit = DateTime.Now;
                 Command.AddDuty(currentDuty);
-                //ToggleDutyUI();
                 P.ToggleDutyUI();
             }
         }
     }
+
+    public static void FindParty()
+    {
+        Task.Run(async () =>
+        {
+            try
+            {
+                await FindPartyCondition();
+            }
+            catch (Exception ex)
+            {
+                Svc.Log.Error($"Shits fucked: {ex.Message}");
+            }
+
+        });
+    }
+
+    public static async Task FindPartyCondition()
+    {
+        var partyState = await Tasks.Party.FetchPartyState(Party.Collect());
+        currentDuty.Players = partyState.Members.ToArray();
+        foreach (var member in currentDuty.Players)
+        {
+            if (member.State == State.New)
+                member.State = State.Familiar;
+        }
+    }
+
 }

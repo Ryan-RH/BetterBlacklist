@@ -5,6 +5,9 @@ using Dalamud.Interface.Windowing;
 using Dalamud.Game.Command;
 using BetterBlacklist.Services;
 using System.Net;
+using BetterBlacklist.GUI;
+using BetterBlacklist.Game;
+using BetterBlacklist.Database;
 
 namespace BetterBlacklist;
 
@@ -17,6 +20,7 @@ public class BetterBlacklist : IDalamudPlugin
     public readonly WindowSystem WindowSystem = new("BetterBlacklist");
     private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
+    private DutyWindow DutyWindow { get; init; }
 
     public BetterBlacklist(IDalamudPluginInterface pi)
     {
@@ -26,9 +30,11 @@ public class BetterBlacklist : IDalamudPlugin
         Configuration = Svc.PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
         ConfigWindow = new ConfigWindow(this);
         MainWindow = new MainWindow(this);
+        DutyWindow = new DutyWindow(this);
 
         WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
+        WindowSystem.AddWindow(DutyWindow);
 
         Svc.PluginInterface.UiBuilder.Draw += DrawUI;
         Svc.PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUI;
@@ -37,19 +43,23 @@ public class BetterBlacklist : IDalamudPlugin
 
         Svc.Commands.AddHandler("/bbl", new CommandInfo(OnChatCommand));
 
-        Database.Init();
+        //Database.Init();
+        Database.Setup.Init();
 
-        Svc.Framework.Update += Database.Update;
+
+        Svc.Framework.Update += Database.Collection.Update;
+        Svc.PartyFinder.ReceiveListing += PartyFinder.Update;
 
         Task.Run(() => { Tomestone.Start(); });
     }
 
     public void Dispose()
     {
-        Svc.Framework.Update -= Database.Update;
+        Svc.Framework.Update -= Database.Collection.Update;
+        Svc.PartyFinder.ReceiveListing -= PartyFinder.Update;
 
         WindowSystem.RemoveAllWindows();
-
+        Database.Connect.CloseConnection();
         ConfigWindow.Dispose();
         MainWindow.Dispose();
         P = null;
@@ -58,6 +68,7 @@ public class BetterBlacklist : IDalamudPlugin
     private void DrawUI() => WindowSystem.Draw();
     public void ToggleConfigUI() => ConfigWindow.Toggle();
     public void ToggleMainUI() => MainWindow.Toggle();
+    public void ToggleDutyUI() => DutyWindow.Toggle();
 
     private void OnChatCommand(string command, string arguments)
     {

@@ -1,17 +1,14 @@
+using BetterBlacklist.Services;
 using Dalamud.Interface.Utility.Raii;
-using Dalamud.Interface.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dalamud.Utility;
-using BetterBlacklist.Services;
-using ImGuiScene;
 
 namespace BetterBlacklist.UI;
 
-internal unsafe static class MenuBar
+public static class MenuBar
 {
     public static bool Refreshing = false;
 
@@ -34,7 +31,10 @@ internal unsafe static class MenuBar
             {
                 // Party Visible, Show History List Button
                 if (ImGui.MenuItem(FontAwesomeIcon.History.ToIconString()))
+                {
                     MainWindow.PartyView = false;
+                    HistoryList.Update();
+                }
                 font.Pop();
                 Util.SetHoverTooltip("History");
             }
@@ -57,16 +57,26 @@ internal unsafe static class MenuBar
                     if (ImGui.MenuItem(FontAwesomeIcon.Redo.ToIconString()))
                     {
                         Refreshing = true;
-                        Tomestone.Refresh();
+                        Task.Run(async () =>
+                        {
+                            try
+                            {
+                                await Tasks.Party.Refresh().ConfigureAwait(false);
+                            }
+                            catch
+                            {
+                                Svc.Log.Information("Refresh Failure");
+                            }
+                        });
                     }
                 }
                 else
                 {
                     // Disable - Currently refreshing
-                    ImGui.PushStyleColor(ImGuiCol.Text, new System.Numerics.Vector4(1.0f, 0.0f, 0.0f, 1.0f));
+                    ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1.0f, 0.0f, 0.0f, 1.0f));
                     ImGui.BeginDisabled(true);
                     ImGui.MenuItem(FontAwesomeIcon.Spinner.ToIconString());
-                    
+
                     ImGui.EndDisabled();
                     ImGui.PopStyleColor();
                 }

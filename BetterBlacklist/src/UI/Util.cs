@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static FFXIVClientStructs.Havok.Common.Base.System.IO.IStream.hkIstream.Delegates;
 
 namespace BetterBlacklist.UI;
 internal static class Util
@@ -51,42 +52,94 @@ internal static class Util
         return new Vector4(red, green, 0.0f, 1.0f);
     }
 
-    public static void AddTextVertical(string text, uint textColor, float scale)
-    {
-
-        var drawList = ImGui.GetWindowDrawList();
-        var pos = ImGui.GetCursorScreenPos();
-        var font = ImGui.GetFont();
-        var size = ImGui.CalcTextSize(text);
-        pos.X = (float)Math.Round(pos.X);
-        pos.Y = (float)Math.Round(pos.Y) + (float)Math.Round(size.X * scale);
-
-        foreach (var c in text)
-        {
-            var glyph = font.FindGlyph(c);
-
-            drawList.PrimReserve(6, 4);
-
-            drawList.PrimQuadUV(
-                pos + new Vector2(glyph.Y0 * scale, -glyph.X0 * scale),
-                pos + new Vector2(glyph.Y0 * scale, -glyph.X1 * scale),
-                pos + new Vector2(glyph.Y1 * scale, -glyph.X1 * scale),
-                pos + new Vector2(glyph.Y1 * scale, -glyph.X0 * scale),
-
-                new Vector2(glyph.U0, glyph.V0),
-                new Vector2(glyph.U1, glyph.V0),
-                new Vector2(glyph.U1, glyph.V1),
-                new Vector2(glyph.U0, glyph.V1),
-                textColor);
-            pos.Y -= glyph.AdvanceX * scale;
-        }
-
-        ImGui.Dummy(new Vector2(size.Y, size.X));
-
-    }
-
     public static void OpenLink(string link)
     {
         Dalamud.Utility.Util.OpenLink(link);
+    }
+
+    public static Vector4 GetColourState(Game.State state)
+    {
+        switch (state)
+        {
+            case Game.State.Friend:
+                return new Vector4(1.00f, 0.00f, 0.84f, 1.0f);
+            case Game.State.Good:
+                return new Vector4(0.00f, 1.00f, 0.00f, 1.0f);
+            case Game.State.Familiar:
+                return new Vector4(0.00f, 1.00f, 1.00f, 1.0f);
+            case Game.State.New:
+                return new Vector4(0.85f, 0.85f, 0.85f, 1.0f);
+            case Game.State.Poor:
+                return new Vector4(1.00f, 1.00f, 0.00f, 1.0f);
+            case Game.State.Bad:
+                return new Vector4(1.00f, 0.50f, 0.00f, 1.0f);
+            case Game.State.Avoid:
+                return new Vector4(1.00f, 0.00f, 0.00f, 1.0f);
+            default:
+                return new Vector4(0, 0, 0, 0);
+        }
+    }
+    public static Vector4 DecideColour(string progPoint, int ultimate)
+    {
+        string[] parts = progPoint.Split(':');
+        string numberPart = parts[0].Substring(1);
+        int phase = int.Parse(numberPart);
+
+        int divider = 0;
+
+        switch (ultimate)
+        {
+            case 0:
+            case 1:
+            case 5:
+                divider = 7;
+                break;
+            case 2:
+                divider = 6;
+                break;
+            case 3:
+                divider = 9;
+                break;
+            case 4:
+                divider = 8;
+                break;
+        }
+
+        var progress = phase / (float)divider;
+
+        return GetColourRange(progress);
+    }
+
+    public static void MakeIconAndPlayerSelectable(Game.Player player)
+    {
+        var jobIcon = Game.Util.GetJobIcon(player.JobId);
+        float totalWidth = ImGui.CalcTextSize(player.Name).X + 30;
+
+        var cursorPos = ImGui.GetCursorPos();
+        var copyPos = new Vector2(cursorPos.X + 3, cursorPos.Y);
+        ImGui.SetCursorPos(copyPos);
+        var popupName = $"##US-{player.Name!.Replace(" ", "+")}_{player.HomeWorld}";
+
+        Popup.Draw(player);
+        if (ImGui.Selectable(popupName, false, ImGuiSelectableFlags.None, new Vector2(totalWidth, 20)))
+        {
+            ImGui.OpenPopup(popupName);
+        }
+        ImGui.SetCursorPos(cursorPos);
+
+        var iconSize = new Vector2(20, 20);
+        if (jobIcon != null)
+        {
+            ImGui.Image(jobIcon.ImGuiHandle, iconSize);
+        }
+        else
+        {
+            ImGui.Image(Game.Util.GetJobIcon(45)!.ImGuiHandle, iconSize);
+        }
+        ImGui.SameLine();
+
+        using var colour = (ImRaii.PushColor(ImGuiCol.Text, Util.GetColourState(player.State)));
+        ImGui.Text(player.Name);
+        colour.Pop();
     }
 }

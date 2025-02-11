@@ -36,22 +36,6 @@ public static class Tomestone
         }
     }
 
-    public static void Refresh()
-    {
-        Task.Run(async () =>
-        {
-            try
-            {
-                await FetchData().ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Log.Information($"Failed to connect: {ex.Message}");
-                MenuBar.Refreshing = false;
-            }
-        });
-    }
-
     public class PlayerInfo
     {
         public uint lodestoneId = 0;
@@ -59,7 +43,7 @@ public static class Tomestone
         public string worldName = "Hidden";
     }
 
-    private static async Task FetchData()
+    public static async Task FetchPartyProg()
     {
         var tasksLodestone = new List<Task<PlayerInfo>>();
         var fetchParty = PartyList.party;
@@ -70,18 +54,14 @@ public static class Tomestone
                 tasksLodestone.Add(FetchLodestoneId(member.Name, member.HomeWorld));
             }
         }
-
         var lodestoneInfo = await Task.WhenAll(tasksLodestone);
 
         var tasksProg = new List<Task>();
-
         foreach (var info in lodestoneInfo)
         {
             tasksProg.Add(ProgManager(info));
         }
         await Task.WhenAll(tasksProg);
-
-        MenuBar.Refreshing = false;
     }
 
     private static async Task<PlayerInfo> FetchLodestoneId(string playerName, string worldName)
@@ -230,7 +210,7 @@ public static class Tomestone
 
     private static void AssignUltimateProg(PlayerInfo playerInfo, string[] ultimateProg)
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < PartyList.party.Size; i++)
         {
             var member = PartyList.party.Members[i];
             if (member != null && member.Name == playerInfo.Name && member.HomeWorld == playerInfo.worldName)

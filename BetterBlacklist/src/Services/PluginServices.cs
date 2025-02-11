@@ -44,6 +44,7 @@ public class Svc
     [PluginService] public static INotificationManager NotificationManager { get; private set; }
     [PluginService] public static IContextMenu ContextMenu { get; private set; }
     [PluginService] public static IMarketBoard MarketBoard { get; private set; }
+    [PluginService] public static IPartyFinderGui PartyFinder { get; private set; }
 
     internal static bool IsInitialized = false;
 

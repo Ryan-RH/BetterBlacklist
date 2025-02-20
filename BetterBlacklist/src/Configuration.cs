@@ -6,7 +6,8 @@ namespace BetterBlacklist;
 public class Configuration : IPluginConfiguration
 {
     public int Version { get; set; } = 0;
-    public bool DataCollectionOff = false;
+    public bool DataCollection = false;
+    public bool DutyWindow = false;
 
     public void Save()
     {

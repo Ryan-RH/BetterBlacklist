@@ -26,6 +26,7 @@ public class ConfigWindow : Window, IDisposable
 
     public override void Draw()
     {
-        ImGui.Checkbox("Turn off Data Collection", ref Configuration.DataCollectionOff);
+        ImGui.Checkbox("Enable DB Collection", ref Configuration.DataCollection);
+        ImGui.Checkbox("Enable Duty End Window", ref Configuration.DutyWindow);
     }
 }

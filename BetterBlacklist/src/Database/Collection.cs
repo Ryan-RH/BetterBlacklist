@@ -39,9 +39,10 @@ public static class Collection
             {
                 InfoCollected = false;
                 timeOfExit = DateTime.Now;
-                if (!P.Configuration.DataCollectionOff)
+                if (P.Configuration.DataCollection)
                     Command.AddDuty(currentDuty);
-                P.ToggleDutyUI();
+                if (P.Configuration.DutyWindow)
+                    P.ToggleDutyUI();
             }
         }
     }

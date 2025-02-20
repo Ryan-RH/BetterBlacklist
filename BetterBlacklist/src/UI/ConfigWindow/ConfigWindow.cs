@@ -26,6 +26,6 @@ public class ConfigWindow : Window, IDisposable
 
     public override void Draw()
     {
-        ImGui.Text("Config");
+        ImGui.Checkbox("Turn off Data Collection", ref Configuration.DataCollectionOff);
     }
 }
